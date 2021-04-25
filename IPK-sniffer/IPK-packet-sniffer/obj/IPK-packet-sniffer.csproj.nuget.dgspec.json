@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-packet-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj": {}
+    "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj": {}
   },
   "projects": {
-    "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-packet-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj": {
+    "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-packet-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj",
+        "projectUniqueName": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj",
         "projectName": "IPK-packet-sniffer",
-        "projectPath": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-packet-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj",
+        "projectPath": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-sniffer/IPK-packet-sniffer/IPK-packet-sniffer.csproj",
         "packagesPath": "/Users/lukashais/.nuget/packages/",
-        "outputPath": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-packet-sniffer/IPK-packet-sniffer/obj/",
+        "outputPath": "/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/IPK-sniffer/IPK-packet-sniffer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/lukashais/.nuget/NuGet/NuGet.Config"

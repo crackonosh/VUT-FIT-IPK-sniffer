@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPK-sniffer", "IPK-sniffer\IPK-sniffer.csproj", "{C72A236A-5675-4FF0-8600-23717918381D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPK-packet-sniffer", "IPK-packet-sniffer\IPK-packet-sniffer.csproj", "{C72A236A-5675-4FF0-8600-23717918381D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
