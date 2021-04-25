@@ -25,7 +25,7 @@ ___
 ### Cleaning project
 To clean files created after building project we can run following commands:
 ```
-dotnet clean ipk-sniffer/ipk -c Release
+dotnet clean ipk-sniffer/ipk-sniffer
 rm -rf build
 ```
   - this removes files created while building project (see [Building project](#Building-project)) and after that removes `build` folder containing compiled files
