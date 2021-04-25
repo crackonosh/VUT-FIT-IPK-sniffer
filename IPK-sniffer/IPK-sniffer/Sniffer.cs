@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using PacketDotNet;
 using SharpPcap;
@@ -9,13 +8,25 @@ namespace IPK_packet_sniffer
 {
   public static class Sniffer
   {
+    /// <summary>
+    /// Holds instance of device we are listening on
+    /// </summary>
     private static LibPcapLiveDevice Device { get; set; }
 
+    /// <summary>
+    /// Options for filter
+    /// </summary>
     private static Options Options { get; set; }
 
+    /// <summary>
+    /// Counter for desired number of packets to sniff
+    /// </summary>
     private static int _packetCounter;
 
 
+    /// <summary>
+    /// Lists all available devices we can listen on on this machine
+    /// </summary>
     public static void ListAvailableDevices()
     {
       var devices = CaptureDeviceList.Instance;
@@ -33,6 +44,10 @@ namespace IPK_packet_sniffer
       Environment.Exit(ReturnCodes.Success);
     }
 
+    /// <summary>
+    /// Setups basic things and starts capturing packets
+    /// </summary>
+    /// <param name="o">Options from commandline arguments</param>
     public static void SniffPackets(Options o)
     {
       // save options
@@ -43,10 +58,15 @@ namespace IPK_packet_sniffer
 
       try
       {
+        // add basic method that should run on captured packet and open
         Device.OnPacketArrival += Device_OnPacketArrival;
         Device.Open(DeviceMode.Promiscuous, 100);
+        
+        // setup filter for capturing packets
         var filter = ConstructFilter();
         Device.Filter = filter;
+        
+        // start capturing packets
         Device.Capture();
       }
       catch (Exception e)
@@ -57,6 +77,10 @@ namespace IPK_packet_sniffer
       }
     }
 
+    /// <summary>
+    /// Constructs filter for capturing packets depending on options
+    /// </summary>
+    /// <returns>String representing filter for SharpPcap library</returns>
     private static string ConstructFilter()
     {
       var filter = "ip and ip6";
@@ -91,6 +115,11 @@ namespace IPK_packet_sniffer
       return filter;
     }
 
+    /// <summary>
+    /// Checks whether given interface name is among devices and if so sets it
+    /// to Device variable, otherwise exits with corresponding exit code
+    /// </summary>
+    /// <param name="interfaceName">Name of interface we are looking for</param>
     private static void CheckInterface(string interfaceName)
     {
       // get all devices
@@ -115,6 +144,11 @@ namespace IPK_packet_sniffer
       Device = devices[index] as LibPcapLiveDevice;
     }
 
+    /// <summary>
+    /// Resolves DateTime into format that is specified in task's info
+    /// </summary>
+    /// <param name="time">DateTime representing captured packet</param>
+    /// <returns>Formatted time as string</returns>
     private static string ResolveTime(DateTime time)
     {
       if (time.Kind == DateTimeKind.Utc)
@@ -139,15 +173,24 @@ namespace IPK_packet_sniffer
       return tmp.ToString();
     }
 
+    /// <summary>
+    /// This function runs every time we capture a packets and depending of
+    /// packet's type chooses it's action
+    /// </summary>
+    /// <param name="sender">???</param>
+    /// <param name="e">Contains info about Device and Packet</param>
     private static void Device_OnPacketArrival(object sender, CaptureEventArgs e)
     {
+      // skip everything that isn't on ethernet link layer
       if (e.Packet.LinkLayerType != LinkLayers.Ethernet) return;
       
+      // basic preparations
       var time = ResolveTime(e.Packet.Timeval.Date);
       var len = e.Packet.Data.Length;
       var parsedPacket = Packet.ParsePacket(e.Packet.LinkLayerType, e.Packet.Data);
       var arpPacket = parsedPacket.PayloadPacket as ArpPacket;
 
+      // check if normal or arp packet
       if (!(parsedPacket.PayloadPacket is IPPacket packet))
       {
         if (arpPacket == null)
@@ -156,7 +199,7 @@ namespace IPK_packet_sniffer
           Environment.Exit(ReturnCodes.InternalError);
         }
         else
-          PrintArpPacket(arpPacket, e.Packet.Data, time, len);
+          Printer.PrintArpPacket(arpPacket, e.Packet.Data, time, len);
       }
       else
       {
@@ -165,12 +208,12 @@ namespace IPK_packet_sniffer
           case ProtocolType.Tcp:
           case ProtocolType.Udp:
             // write TCP/UDP packet
-            if (!PrintTcpUdpPacket(packet, e.Packet.Data, time, len)) return;
+            if (!Printer.PrintTcpUdpPacket(packet, e.Packet.Data, time, len)) return;
             break;
           case ProtocolType.Icmp:
           case ProtocolType.IcmpV6:
             //write ICMP
-            PrintIcmpPacket(packet, e.Packet.Data, time, len);
+            Printer.PrintIcmpPacket(packet, e.Packet.Data, time, len);
             break;
           default:
             // Error unsupported protocol
@@ -180,123 +223,16 @@ namespace IPK_packet_sniffer
         }
       }
 
+      // add space if we expect another packet and return from function
       if (++_packetCounter != Options.NumberOfPackets)
       {
         Console.WriteLine();
         return;
       }
+      
+      // close listening on device if it's still open and 
       if (Device is {Opened: true}) Device.Close();
       Environment.Exit(ReturnCodes.Success);
-    }
-
-    private static bool PrintTcpUdpPacket(IPPacket packet, IEnumerable<byte> data, string time, int length)
-    {
-      if (!(packet.PayloadPacket is UdpPacket payloadPacket)) return false;
-      
-      Console.WriteLine(
-        "[{0}] {1}{2} : {3} > {4} : {5}, length {6} bytes",
-        packet.Protocol.ToString().ToUpper(), time,
-        packet.SourceAddress, payloadPacket.SourcePort,
-        packet.DestinationAddress, payloadPacket.DestinationPort,
-        length
-      );
-      PrintData(data);
-      return true;
-    }
-
-    private static void PrintIcmpPacket(IPPacket packet, IEnumerable<byte> data, string time, int length)
-    {
-      Console.WriteLine(
-        "[{0}] {1}{2} > {3}, length {4} bytes",
-        packet.Protocol, time, packet.SourceAddress, packet.DestinationAddress, length
-      );
-      PrintData(data);
-    }
-
-    private static void PrintArpPacket(ArpPacket packet, IEnumerable<byte> data, string time, int length)
-    {
-      Console.WriteLine(
-        "[{0}] {1}{2} > {3} , length {4} bytes",
-        "ARP", time,
-        packet.SenderProtocolAddress,
-        packet.TargetProtocolAddress,
-        length
-      );
-      PrintData(data);
-    }
-
-    private static void PrintData(IEnumerable<byte> data)
-    {
-      var hex = new StringBuilder();
-      var ascii = new StringBuilder();
-
-      // fill hex and ascii strings
-      foreach (var t in data)
-      {
-        hex.Append(t.ToString("X").PadLeft(2, '0'));
-        if (t >= 0x21 && t <= 0x7e)
-          ascii.Append(Encoding.ASCII.GetString(new[] {t}));
-        else
-          ascii.Append('.');
-      }
-
-      var hexArray = new List<string>();
-      var asciiArray = new List<string>();
-
-      // helping variable for filling hex/ascii array and restructuring hex array
-      var tmp = new StringBuilder();
-
-      for (var i = 0; i < hex.Length; i++)
-      {
-        tmp.Append(hex[i]);
-        if (i + 1 == hex.Length)
-        {
-          hexArray.Add(tmp.ToString());
-          tmp.Clear();
-          break;
-        }
-
-        if (tmp.Length != 32) continue;
-        hexArray.Add(tmp.ToString());
-        tmp.Clear();
-      }
-
-      for (var i = 0; i < ascii.Length; i++)
-      {
-        tmp.Append(ascii[i]);
-        if (i + 1 == ascii.Length)
-        {
-          asciiArray.Add(tmp.ToString());
-          tmp.Clear();
-          break;
-        }
-
-        if (tmp.Length != 16) continue;
-        asciiArray.Add(tmp.ToString());
-        tmp.Clear();
-      }
-
-
-      for (var j = 0; j < hexArray.Count; j++)
-      {
-        for (var i = 0; i < hexArray[j].Length; i++)
-        {
-          tmp.Append(hexArray[j][i]);
-          if (i % 2 == 1) tmp.Append(' ');
-          if (i != 1 && i != 29 && i % 14 == 1) tmp.Append(' ');
-        }
-
-        hexArray[j] = tmp.ToString().PadRight(49, ' ');
-        tmp.Clear();
-      }
-
-      for (var i = 0; i < hexArray.Count; i++)
-      {
-        Console.WriteLine("0x{0}0: {1} {2}",
-          i.ToString().PadLeft(3, '0'),
-          hexArray[i], asciiArray[i]
-        );
-      }
     }
   }
 }
