@@ -3,7 +3,7 @@ namespace IPK_sniffer
   /// <summary>
   /// Class containing return codes for different outcomes
   /// </summary>
-  public class ReturnCodes
+  public static class ReturnCodes
   {
     /// <summary>
     /// If program ended successfully 
