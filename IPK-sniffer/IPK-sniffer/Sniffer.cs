@@ -283,10 +283,10 @@ namespace IPK_packet_sniffer
         {
           tmp.Append(hexArray[j][i]);
           if (i % 2 == 1) tmp.Append(' ');
-          if (i != 1 && i % 14 == 1) tmp.Append(' ');
+          if (i != 1 && i != 29 && i % 14 == 1) tmp.Append(' ');
         }
 
-        hexArray[j] = tmp.ToString();
+        hexArray[j] = tmp.ToString().PadRight(49, ' ');
         tmp.Clear();
       }
 
