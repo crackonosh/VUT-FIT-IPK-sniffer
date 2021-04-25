@@ -1,0 +1,13 @@
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.csprojAssemblyReference.cache
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.AssemblyInfoInputs.cache
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.AssemblyInfo.cs
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.csproj.CoreCompileInputs.cache
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/build/ipk-sniffer.deps.json
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/build/ipk-sniffer.runtimeconfig.json
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/build/ipk-sniffer.runtimeconfig.dev.json
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/build/ipk-sniffer.dll
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/build/ipk-sniffer.pdb
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.csproj.CopyComplete
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.dll
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.pdb
+/Users/lukashais/Documents/SCHOOL/VYSOKA/4thSemester/IPK/ipk2/ipk-sniffer/ipk-sniffer/obj/Release/netcoreapp3.1/ipk-sniffer.genruntimeconfig.cache
