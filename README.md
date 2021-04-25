@@ -9,6 +9,8 @@ Application is written in C# using `.NET Core 3.1`, but newer versions of `.NET`
   1. [CommandLineParser](https://www.nuget.org/packages/CommandLineParser/) - for parsing arguments from command line
   1. [SharpPcap](https://www.nuget.org/packages/CommandLineParser/) - for listing interfaces and capturing packets
 
+___
+
 ### Building project
 To build project we can use this command that downloads dependencies and compiles project into new `build` folder created in _present working directory_:
 ```
@@ -17,6 +19,8 @@ dotnet build ipk-sniffer/ipk-sniffer -c Release -o build -r <RUNTIME>
   - where `<RUNTIME>` equals to current platform we want to build for (ex.: `linux-x64`, `osx-x64`,...), in makefile `<RUNTIME>` equals to `linux-x64`
 
 We also can run `make` command which perfroms `clean` (see [Cleaning project](#Cleaning-project) and `build` (is equal to command above) targets specified in makefile.
+
+___
 
 ### Cleaning project
 To clean files created after building project we can run following commands:
@@ -27,6 +31,8 @@ rm -rf build
   - this removes files created while building project (see [Building project](#Building-project)) and after that removes `build` folder containing compiled files
 
 We also can run `make clean` command which performs those 2 lines mentioned above.
+
+___
 
 ### Running program
 If building was successful we are ablo to run our program with this command:
