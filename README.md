@@ -47,5 +47,6 @@ sudo ./build/ipk-sniffer {[-i {interface}|--interface {interface}]} {-p port} {[
   - `--arp` - only ARP packets
   - `--icmp` - only ICMP packets
   - `-n num` - number of packets to capture, defaults to 1
+
 We are able to combinate `-t`, `-u`, `--arp`, `--icmp` arguments between each other. If no argument from those 4 is specified it equals to having all 4 present.
 
